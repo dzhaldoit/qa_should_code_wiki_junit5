@@ -15,13 +15,23 @@ public class ShouldIssuesSearchTest {
     }
 
     @Test
-    void shouldBeCodeJUnit5() {
+    void shouldBeCodeJUnit5Test() {
         open("selenide/selenide");
         $("#wiki-tab").click();
         $$(".internal").findBy(text("Soft assertions")).click();
 
 
-        $("#wiki-wrapper").shouldHave(text("Using JUnit5 extend test class"));
+        $("#wiki-wrapper").shouldHave(text("@ExtendWith({SoftAssertsExtension.class})\n" +
+                "class Tests {\n" +
+                "  @Test\n" +
+                "  void test() {\n" +
+                "    Configuration.assertionMode = SOFT;\n" +
+                "    open(\"page.html\");\n" +
+                "\n" +
+                "    $(\"#first\").should(visible).click();\n" +
+                "    $(\"#second\").should(visible).click();\n" +
+                "  }\n" +
+                "}"));
     }
 
 }
